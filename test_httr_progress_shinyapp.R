@@ -1,4 +1,7 @@
+## First installation method
 # remotes::install_github(repo =  "https://github.com/JohnCoene/waiter")
+## Second installation method, after downloading from https://codeload.github.com/JohnCoene/waiter/zip/refs/heads/master
+## and unzipping
 # devtools::install("waiter-master")
 library(shiny)
 library(waiter)
