@@ -1,1 +1,1 @@
-# test_httr_progress
+This repo only intends to test a feature added by @JohnCoene to {waiter} R package, see https://github.com/JohnCoene/waiter/issues/103
