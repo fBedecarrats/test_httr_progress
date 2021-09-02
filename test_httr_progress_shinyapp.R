@@ -1,8 +1,10 @@
-# library(remotes)
-# install_github(repo =  "https://github.com/JohnCoene/waiter")
+# remotes::install_github(repo =  "https://github.com/JohnCoene/waiter")
+# devtools::install("waiter-master")
 library(shiny)
 library(waiter)
 library(httr)
+
+datasource <- "https://data.nantesmetropole.fr/explore/dataset/244400404_nombre-convives-jour-cantine-nantes-2011/download/?format=csv&use_labels_for_header=true"
 
 # A UI where we want to see a progress bar on the navbar
 ui <- navbarPage("A navbar to visualize progress",
@@ -13,19 +15,14 @@ ui <- navbarPage("A navbar to visualize progress",
 )
                  
 
-    
 
-# Define server logic required to draw a histogram
+# Testing the function
 server <- function(input, output) {
+    
+    waitress <- Waitress$new("nav", theme = "overlay", min = 0, max = 10)
+    
     observeEvent(input$dwld, {
-        waitress <- Waitress$new("nav", theme = "overlay", min = 0, max = 10)
-        
-        for(i in 1:10){
-            waitress$inc(1) # increase by 10%
-            Sys.sleep(.5)
-        }
-        waitress$close()
-
+        my_data <- GET(datasource, httr_progress(waitress))
     })
 
 }
