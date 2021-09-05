@@ -1,8 +1,5 @@
-## First installation method
+## Installing from the repo
 # remotes::install_github(repo =  "https://github.com/JohnCoene/waiter")
-## Second installation method, after downloading from https://codeload.github.com/JohnCoene/waiter/zip/refs/heads/master
-## and unzipping
-# devtools::install("waiter-master")
 library(shiny)
 library(waiter)
 library(httr)
@@ -12,7 +9,7 @@ datasource <- "https://data.nantesmetropole.fr/explore/dataset/244400404_nombre-
 # A UI where we want to see a progress bar on the navbar
 ui <- navbarPage("A navbar to visualize progress",
                  tabPanel("Trigger download",
-                          useWaitress(),
+                          useWaitress(color = "#7F7FFF"),
                           actionButton("dwld", "Download !")
     )
 )
@@ -25,7 +22,9 @@ server <- function(input, output) {
     waitress <- Waitress$new("nav", theme = "overlay", min = 0, max = 10)
     
     observeEvent(input$dwld, {
-        my_data <- GET(datasource, httr_progress(waitress))
+        # A 5.3Mo file
+        my_data <- GET(datasource, httr_progress(waitress), 
+                       write_disk("my_data.csv", overwrite = TRUE))
     })
 
 }
